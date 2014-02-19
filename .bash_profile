@@ -1,33 +1,4 @@
-# Tried to compile vim with python so now I need to update the bash path
-export PATH="~/.pyenv/shims:/usr/local/bin:/usr/local/sbin:~/bin/$PATH"
-export PATH="/usr/local/bin:$PATH"
-
-# Setting PATH for Python 3.3
-# The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.3/bin:${PATH}"
-export PATH
-
-# Setting PATH for Python 3.2
-# The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.2/bin:${PATH}"
-export PATH
-
-# Added by Canopy installer on 2013-12-16
-# VIRTUAL_ENV_DISABLE_PROMPT can be set to '' to make bashprompt show that Canopy is active, otherwise 1
-#VIRTUAL_ENV_DISABLE_PROMPT=1 source /Users/xander/Library/Enthought/Canopy_64bit/User/bin/activate
-
-eval "$(pyenv init -)"
-
-# added by Anaconda 1.8.0 installer
-export PATH="/Users/xander/anaconda/bin:$PATH"
-
-##
-# Your previous /Users/xander/.bash_profile file was backed up as /Users/xander/.bash_profile.macports-saved_2014-01-28_at_22:49:12
-##
-
-# MacPorts Installer addition on 2014-01-28_at_22:49:12: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
+# Just really wanted to save these pretty colors somewhere
 
 C_DEFAULT="\[\033[m\]"
 C_WHITE="\[\033[1m\]"
