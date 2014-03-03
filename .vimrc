@@ -9,6 +9,7 @@ set t_Co=256
 syntax on
 colorscheme molokai
 
+set backspace=indent,eol,start
 set expandtab
 set textwidth=79
 set tabstop=8
