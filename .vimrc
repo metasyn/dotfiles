@@ -7,9 +7,8 @@ call pathogen#helptags()
 
 set t_Co=256
 syntax on
-colorscheme molokai
+colorscheme Tomorrow-Night-Eighties 
 
-set backspace=indent,eol,start
 set expandtab
 set textwidth=79
 set tabstop=8
