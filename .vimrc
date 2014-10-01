@@ -1,10 +1,18 @@
-filetype on
-filetype plugin on
-filetype plugin indent on
+" vundle vundle vundle !
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+" plugins!
+Plugin 'scrooloose/syntastic'
+Plugin 'ervandew/supertab'
 
+call vundle#end()            
+
+filetype plugin indent on  
 set t_Co=256
 syntax on
 colorscheme Tomorrow-Night-Eighties 
@@ -16,11 +24,11 @@ set softtabstop=2
 set shiftwidth=2
 set autoindent
 set smartindent
+set ruler
 
 set foldmethod=indent
 set foldlevel=99
 
-au FileType python set omnifunc=pythoncomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 set completeopt=menuone,longest,preview
 
@@ -29,5 +37,3 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
-map <leader>n :NERDTreeToggle<CR>
-execute pathogen#infect()
