@@ -1,1 +1,9 @@
 dot vim v2 !
+============
+Using Vundle
+
+Plugins
+=======
+* syntastic
+* supertab
+
