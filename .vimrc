@@ -36,6 +36,7 @@ set ruler
 
 " turn on airline
 set laststatus=2
+let g:airline_powerline_fonts = 1
 
 set foldmethod=indent
 set foldlevel=99
