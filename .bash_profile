@@ -28,6 +28,9 @@ C_BG_LIGHTGRAY="\[\033[47m\]"
 
 # Make ls use colors
 export CLICOLOR=1
-export PS1="\n$C_LIGHTGREEN\u$C_DARKGRAY@$C_BLUE\h $C_DARKGRAY:
-$C_LIGHTYELLOW\w\n$C_DARKGRAY\$$C_DEFAULT "
+export PS1="\n$C_WHITE\u$C_DARKGRAY@$C_CYAN\h $C_DARKGRAY:
+$C_LIGHTGRAY\w\n$C_DARKGRAY\$$C_DEFAULT "
 
+# we so lazy
+alias metaws="ssh -i ~/.ssh/xandahome.pem ubuntu@metasyn.pw"
+export SPLUNK_HOME='/opt/splunk/'
