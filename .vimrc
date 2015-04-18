@@ -6,9 +6,17 @@ call vundle#begin()
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+" vundle vroom vroom
+Plugin 'gmarik/Vundle.vim'
+
 " plugins!
+Plugin 'bling/vim-airline'
 Plugin 'scrooloose/syntastic'
 Plugin 'ervandew/supertab'
+
+" more optional stuff
+Plugin 'elzr/vim-json'
+Plugin 'plasticboy/vim-markdown'
 
 call vundle#end()            
 
@@ -25,6 +33,10 @@ set shiftwidth=2
 set autoindent
 set smartindent
 set ruler
+
+" turn on airline
+set laststatus=2
+let g:airline_powerline_fonts = 1
 
 set foldmethod=indent
 set foldlevel=99
