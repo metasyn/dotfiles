@@ -3,8 +3,6 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 
 " vundle vroom vroom
 Plugin 'gmarik/Vundle.vim'
@@ -48,4 +46,4 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
-
+:imap jj <Esc>
