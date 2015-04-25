@@ -11,6 +11,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'scrooloose/syntastic'
 Plugin 'ervandew/supertab'
+Plugin 'pangloss/vim-javascript'
 
 " more optional stuff
 Plugin 'elzr/vim-json'
@@ -24,13 +25,13 @@ syntax on
 colorscheme Tomorrow-Night-Eighties 
 
 set expandtab
-set textwidth=79
 set tabstop=4
 set softtabstop=2
 set shiftwidth=2
 set autoindent
 set smartindent
 set ruler
+set nu
 
 " turn on airline
 set laststatus=2
