@@ -12,12 +12,17 @@ Plugin 'bling/vim-airline'
 Plugin 'scrooloose/syntastic'
 Plugin 'ervandew/supertab'
 Plugin 'pangloss/vim-javascript'
+Plugin 'terryma/vim-multiple-cursors'
 
 " more optional stuff
 Plugin 'elzr/vim-json'
 Plugin 'plasticboy/vim-markdown'
 
 call vundle#end()            
+
+" because its 2015
+let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+
 
 filetype plugin indent on  
 set t_Co=256
