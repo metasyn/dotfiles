@@ -13,6 +13,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'ervandew/supertab'
 Plugin 'pangloss/vim-javascript'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'terryma/vim-expand-region'
 
 " more optional stuff
 Plugin 'elzr/vim-json'
@@ -48,8 +49,21 @@ set foldlevel=99
 let g:SuperTabDefaultCompletionType = "context"
 set completeopt=menuone,longest,preview
 
+" because who don't love copy pasta, bay bee !
+set clipboard=unnamedplus,unnamed,autoselect
+
+
 map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 :imap jj <Esc>
+
+" leader = space
+let mapleader = "\<Space>"
+
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
+
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
