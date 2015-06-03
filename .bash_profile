@@ -32,5 +32,20 @@ export PS1="\n$C_WHITE\u$C_DARKGRAY@$C_CYAN\h $C_DARKGRAY:
 $C_LIGHTGRAY\w\n$C_DARKGRAY\$$C_DEFAULT "
 
 # we so lazy
+alias vim="/usr/local/bin/vim" # clipboard
 alias metaws="ssh -i ~/.ssh/xandahome.pem ubuntu@metasyn.pw"
+alias pyserve="python -m SimpleHTTPServer"
+alias gcm="git commit -m"
+
+# or are we
+function cless () {
+  pygmentize -f terminal "$1" | less -R
+}
+
+function mcd () {
+  mkdir -p $1
+  cd $1
+}
+
+# exports
 export SPLUNK_HOME='/opt/splunk/'
