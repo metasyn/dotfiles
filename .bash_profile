@@ -26,7 +26,9 @@ C_BG_PURPLE="\[\033[45m\]"
 C_BG_CYAN="\[\033[46m\]"
 C_BG_LIGHTGRAY="\[\033[47m\]"
 
-# Make ls use colors
+# Make ls use colors this way
+export LSCOLORS=hxfxcxdxbxegedabagacad
+
 export CLICOLOR=1
 export PS1="\n$C_WHITE\u$C_DARKGRAY@$C_CYAN\h $C_DARKGRAY:
 $C_LIGHTGRAY\w\n$C_DARKGRAY\$$C_DEFAULT "
@@ -49,3 +51,11 @@ function mcd () {
 
 # exports
 export SPLUNK_HOME='/opt/splunk/'
+
+# THE LAZE
+alias ..="cd .."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+
