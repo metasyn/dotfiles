@@ -14,6 +14,7 @@ Plugin 'ervandew/supertab'
 Plugin 'pangloss/vim-javascript'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'terryma/vim-expand-region'
+Plugin 'sjl/gundo.vim'
 
 " more optional stuff
 Plugin 'elzr/vim-json'
@@ -23,6 +24,11 @@ call vundle#end()
 
 " because its 2015
 let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+let g:syntastic_python_checkers = ['pylint']
+
+" sometimes pep8 is too much
+" C0103 - invalid constant name
+let g:syntastic_python_pylint_arg = '--disable=C0103' 
 
 
 filetype plugin indent on  
@@ -31,9 +37,10 @@ syntax on
 colorscheme Tomorrow-Night-Eighties 
 
 set expandtab
-set tabstop=4
-set softtabstop=2
-set shiftwidth=2
+set tabstop=8
+set softtabstop=4
+set shiftwidth=4
+set backspace=2
 set autoindent
 set smartindent
 set ruler
@@ -52,18 +59,8 @@ set completeopt=menuone,longest,preview
 " because who don't love copy pasta, bay bee !
 set clipboard=unnamedplus,unnamed,autoselect
 
-
 map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
-:imap jj <Esc>
 
-" leader = space
-let mapleader = "\<Space>"
-
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>q :q<CR>
-
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
