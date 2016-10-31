@@ -1,6 +1,6 @@
 " vundle vundle vundle !
 set nocompatible
-filetype off
+filetype plugin on
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -36,6 +36,8 @@ set t_Co=256
 syntax on
 colorscheme Tomorrow-Night-Eighties 
 
+
+" python is cool
 set expandtab
 set tabstop=8
 set softtabstop=4
@@ -45,6 +47,9 @@ set autoindent
 set smartindent
 set ruler
 set nu
+
+" html 2 space
+autocmd Filetype html setlocal ts=2 sts=2 sw=2 expandtab
 
 " turn on airline
 set laststatus=2
