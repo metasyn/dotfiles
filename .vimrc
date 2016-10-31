@@ -1,14 +1,15 @@
 " vundle vundle vundle !
 set nocompatible
 filetype plugin on
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=bundle/Vundle.vim
 call vundle#begin()
 
 " vundle vroom vroom
 Plugin 'gmarik/Vundle.vim'
 
 " plugins!
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
 Plugin 'ervandew/supertab'
 Plugin 'pangloss/vim-javascript'
