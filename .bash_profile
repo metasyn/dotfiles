@@ -1,5 +1,3 @@
-# Just really wanted to save these pretty colors somewhere
-
 C_DEFAULT="\[\033[m\]"
 C_WHITE="\[\033[1m\]"
 C_BLACK="\[\033[30m\]"
@@ -25,21 +23,42 @@ C_BG_BLUE="\[\033[44m\]"
 C_BG_PURPLE="\[\033[45m\]"
 C_BG_CYAN="\[\033[46m\]"
 C_BG_LIGHTGRAY="\[\033[47m\]"
+OCTO=$'\xf0\x9f\x90\x99'
+ARROW=$'\xe2\x9e\x9c'
 
 # Make ls use colors this way
 export LSCOLORS=hxfxcxdxbxegedabagacad
-
 export CLICOLOR=1
-export PS1="\n$C_WHITE\u$C_DARKGRAY@$C_CYAN\h $C_DARKGRAY:
-$C_LIGHTGRAY\w\n$C_DARKGRAY\$$C_DEFAULT "
+export PS1="$C_WHITE$OCTO  \u$C_DARKGRAY@$C_CYAN\h $C_LIGHTGRAY: $C_LIGHTGRAY\w$C_LIGHTGREEN\$(parse_git_branch)\n$C_LIGHTGRAY$ARROW $C_DEFAULT"
+export EDITOR=vim
+export SPLUNK_HOME=/opt/splunk
+export GOPATH=~/gowork
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 
 # we so lazy
 alias vim="/usr/local/bin/vim" # clipboard
 alias metaws="ssh -i ~/.ssh/xandahome.pem ubuntu@metasyn.pw"
 alias pyserve="python -m SimpleHTTPServer"
 alias gcm="git commit -m"
+alias iris='ipython --profile=iris'
 
-# or are we
+alias ..="cd .."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+
+alias rsw='/opt/splunk/bin/splunk restart splunkweb'
+alias rsp='/opt/splunk/bin/splunk restart'
+alias spip="pip install -r requirements.txt -i https://repo.splunk.com/artifactory/api/pypi/pypi-virtual/simple"
+alias orca="docker run --rm -it --name orca -e USER=$USER \
+   -v /var/run/docker.sock:/var/run/docker.sock \
+   -v $HOME/.orca:/root/.orca \
+   -v $HOME/.ssh:/root/.ssh \
+   -v \$(pwd -P):/orca-home repo.splunk.com/splunk/products/orca"
+
+
 function cless () {
   pygmentize -f terminal "$1" | less -R
 }
@@ -49,13 +68,14 @@ function mcd () {
   cd $1
 }
 
-# exports
-export SPLUNK_HOME='/opt/splunk/'
+parse_git_branch() {
+         git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+     }
+     
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
 
-# THE LAZE
-alias ..="cd .."
-alias ..2="cd ../.."
-alias ..3="cd ../../.."
-alias ..4="cd ../../../.."
-alias ..5="cd ../../../../.."
+. ~/code/z/z.sh
 
+eval "$(pyenv init -)"
