@@ -32,13 +32,14 @@ export CLICOLOR=1
 export PS1="$C_WHITE$OCTO  \u$C_DARKGRAY@$C_CYAN\h $C_LIGHTGRAY: $C_LIGHTGRAY\w$C_LIGHTGREEN\$(parse_git_branch)\n$C_LIGHTGRAY$ARROW $C_DEFAULT"
 export EDITOR=vim
 export SPLUNK_HOME=/opt/splunk
-export GOPATH=~/gowork
 export PYENV_ROOT="$HOME/.pyenv"
+
 export PATH="$PYENV_ROOT/bin:$PATH"
+
 
 # we so lazy
 alias vim="/usr/local/bin/vim" # clipboard
-alias metaws="ssh -i ~/.ssh/xandahome.pem ubuntu@metasyn.pw"
+alias metaws="ssh -i ~/.ssh/xandahome.pem xander@metasyn.pw"
 alias pyserve="python -m SimpleHTTPServer"
 alias gcm="git commit -m"
 alias iris='ipython --profile=iris'
@@ -72,10 +73,26 @@ parse_git_branch() {
          git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
      }
      
+
+# Completions
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-. ~/code/z/z.sh
+if [ -f ~/code/z/z.sh ]; then
+  . ~/code/z/z.sh
+fi
+
+
+export PYTHONDONTWRITEBYTECODE="true"
 
 eval "$(pyenv init -)"
+
+export PATH=/Users/aljohnson/.pyenv/shims:/Users/aljohnson/.pyenv/bin:/Users/aljohnson/Library/Python/2.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+export PKG_CONFIG_PATH=:/usr/local/lib/pkgconfig:/us/local/lib
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+alias rmpycache='find ~/git/ml-app -iname "*.pyc" | xargs rm && find ~/git/ml-app -type d -iname __pycache__ | xargs rm -rf'
+
+export PATH="$PATH:~/code/nim/bin"

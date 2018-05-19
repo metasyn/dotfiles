@@ -10,10 +10,12 @@ Plugin 'vim-airline/vim-airline' " basic
 Plugin 'vim-airline/vim-airline-themes' " pretty
 
 " completion, syntax
-Plugin 'valloric/youcompleteme'
+" Plugin 'valloric/youcompleteme'
 Plugin 'w0rp/ale'
+Plugin 'kien/ctrlp.vim'
 
 Plugin 'elzr/vim-json' " less quotes
+Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'plasticboy/vim-markdown' " syntax
 
 Plugin 'mileszs/ack.vim' "Ack search
@@ -39,7 +41,11 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['pylint'],
 \}
-let g:ale_python_pylint_options= '--rcfile ~/.pylint.rc'
+let g:ale_python_pylint_options= '--rcfile ~/pylintrc'
+
+let g:ale_fixers = {
+\   'javascript': ['eslint']
+\}
 
 " nerd tree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
@@ -87,7 +93,5 @@ autocmd Filetype html setlocal ts=2 sts=2 sw=2 expandtab
 au BufRead,BufNewFile *.es6 set ft=javascript
 au BufRead,BufNewFile *.sbt set ft=scala
 
-
-
-
-
+set tabstop=2
+set shiftwidth=2
