@@ -1,45 +1,53 @@
-" vundle vundle vundle !
 set nocompatible
 set encoding=utf-8
 filetype plugin on
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+
+" if you don't have plug, you need to run
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+call plug#begin('~/.vim/plugged')
 
 " pretty status line
-Plugin 'vim-airline/vim-airline' " basic
-Plugin 'vim-airline/vim-airline-themes' " pretty
+Plug 'vim-airline/vim-airline' " basic
+Plug 'vim-airline/vim-airline-themes' " pretty
 
 " completion, syntax
-" Plugin 'valloric/youcompleteme'
-Plugin 'w0rp/ale'
-Plugin 'kien/ctrlp.vim'
+" Plug 'valloric/youcompleteme'
+Plug 'w0rp/ale'
+Plug 'kien/ctrlp.vim'
 
-Plugin 'elzr/vim-json' " less quotes
-Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'plasticboy/vim-markdown' " syntax
+Plug 'elzr/vim-json' " less quotes
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'plasticboy/vim-markdown' " syntax
 
-Plugin 'mileszs/ack.vim' "Ack search
-Plugin 'scrooloose/nerdtree'
+Plug 'mileszs/ack.vim' "Ack search
+Plug 'scrooloose/nerdtree'
 
-Plugin 'terryma/vim-expand-region' " + / - in visual mode
-Plugin 'terryma/vim-multiple-cursors' " C-n for multiple
-Plugin 'Chiel92/vim-autoformat' " Eh
+Plug 'terryma/vim-expand-region' " + / - in visual mode
+Plug 'terryma/vim-multiple-cursors' " C-n for multiple
+Plug 'Chiel92/vim-autoformat' " Eh
 
-Plugin 'sjl/gundo.vim' "Under used
-Plugin 'tpope/vim-fugitive' "Gblame etc.
+Plug 'sjl/gundo.vim' "Under used
+Plug 'tpope/vim-fugitive' "Gblame etc.
 
 " javascript
-Plugin 'othree/yajs.vim'
-Plugin 'pangloss/vim-javascript' 
-Plugin 'maksimr/vim-jsbeautify'
+Plug 'othree/yajs.vim'
+Plug 'pangloss/vim-javascript' 
+Plug 'maksimr/vim-jsbeautify'
 
-call vundle#end()
+" nim
+Plug 'zah/nim.vim'
+
+" go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+call plug#end()
 
 
 " ALE
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['pylint'],
+\   'nim': ['nimcheck'],
 \}
 let g:ale_python_pylint_options= '--rcfile ~/pylintrc'
 
@@ -80,6 +88,20 @@ set foldlevel=99
 
 " because who don't love copy pasta, bay bee !
 set clipboard=unnamedplus,unnamed,autoselect
+
+" nim
+fun! JumpToDef()
+  if exists("*GotoDefinition_" . &filetype)
+    call GotoDefinition_{&filetype}()
+  else
+    exe "norm! \<C-]>"
+  endif
+endf
+
+" Jump to tag
+nn <M-g> :call JumpToDef()<cr>
+ino <M-g> <esc>:call JumpToDef()<cr>i
+
 
 " turn on airline
 set laststatus=2
