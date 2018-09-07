@@ -18,3 +18,6 @@ delete_and_link zsh/.zsh_plugins.txt .zsh_plugins.txt
 
 # z.sh
 delete_and_link z.sh .z.sh
+
+# colors
+delete_and_link terminal/dircolors.ansi-dark .dircolors.ansi-dark
