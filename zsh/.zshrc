@@ -1,9 +1,17 @@
 #!/bin/zsh
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+
+# Plugins
 source <(antibody init)
 antibody bundle < ~/.zsh_plugins.txt
 
 # jump around
 source ~/.z.sh
+
+# pretty ls
+eval `gdircolors ~/.dircolors.ansi-dark`
+alias ls="gls --color=auto"
 
 # GO 
 export GOPATH="$HOME/go"
@@ -38,3 +46,7 @@ alias orca="docker run --rm -it --name orca -e USER=$USER \
    -v $HOME/.ssh:/root/.ssh \
    -v \$(pwd -P):/orca-home repo.splunk.com/splunk/products/orca"
 
+# k8s
+if [ $commands[kubectl] ]; then
+  source <(kubectl completion zsh)
+fi
