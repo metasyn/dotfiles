@@ -15,6 +15,13 @@ delete_and_link vim/.vimrc .vimrc
 delete_and_link zsh/.zshrc .zshrc
 delete_and_link zsh/.zsh_plugins.txt .zsh_plugins.txt
 
+# tmux
+delete_and_link tmux/.tmux.conf .tmux.conf
+
+# alacritty
+mkdir -p $HOME/.config/alacritty
+delete_and_link alacritty/alacritty.yml .config/alacritty/alacritty.yml
+
 # z.sh
 delete_and_link z.sh .z.sh
 
