@@ -16,6 +16,7 @@ Plug 'w0rp/ale'
 Plug 'kien/ctrlp.vim'
 
 Plug 'elzr/vim-json' " less quotes
+Plug 'cespare/vim-toml'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'plasticboy/vim-markdown' " syntax
 
@@ -88,6 +89,9 @@ set foldlevel=99
 
 " because who don't love copy pasta, bay bee !
 set clipboard=unnamedplus,unnamed,autoselect
+
+" go
+let g:go_version_warning = 0
 
 " nim
 fun! JumpToDef()
