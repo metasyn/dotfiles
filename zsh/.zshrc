@@ -2,6 +2,9 @@
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
+HISTFILE=~/.zsh_history
+ulimit -S -n 2048
+
 # Plugins
 source <(antibody init)
 antibody bundle < ~/.zsh_plugins.txt
@@ -25,6 +28,8 @@ export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:/opt/python/bin"
 export PYTHONDONTWRITEBYTECODE="true"
 eval "$(pyenv init -)"
+alias pyserve="python -m SimpleHTTPServer"
+alias pycrm="find . | grep -e pyc$ | xargs rm && find . | grep pycache | xargs rm -rf"
 
 # Nim
 export PATH=/Users/aljohnson/.nimble/bin:$PATH
@@ -33,13 +38,12 @@ export PATH=/Users/aljohnson/.nimble/bin:$PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 
 alias vim="/usr/local/bin/vim" # clipboard
-alias pyserve="python -m SimpleHTTPServer"
 
 # Splunk
 export SPLUNK_HOME=/opt/splunk
 alias rsw='/opt/splunk/bin/splunk restart splunkweb'
 alias rsp='/opt/splunk/bin/splunk restart'
-alias spip="pip install -r requirements.txt -i https://repo.splunk.com/artifactory/api/pypi/pypi-virtual/simple"
+alias spip="pip install -i https://repo.splunk.com/artifactory/api/pypi/pypi-virtual/simple"
 alias orca="docker run --rm -it --name orca -e USER=$USER \
    -v /var/run/docker.sock:/var/run/docker.sock \
    -v $HOME/.orca:/root/.orca \
