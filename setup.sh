@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 delete_and_link() {
     rm -r $HOME/$2
     echo "Linking $PWD/$1 to $HOME/$2"
