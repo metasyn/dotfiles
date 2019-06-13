@@ -13,7 +13,7 @@ Plug 'vim-airline/vim-airline-themes' " pretty
 " completion, syntax
 " Plug 'valloric/youcompleteme'
 Plug 'w0rp/ale'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'elzr/vim-json' " less quotes
 Plug 'cespare/vim-toml'
@@ -30,6 +30,8 @@ Plug 'Chiel92/vim-autoformat' " Eh
 Plug 'sjl/gundo.vim' "Under used
 Plug 'tpope/vim-fugitive' "Gblame etc.
 
+Plug 'lingceng/z.vim'
+
 " javascript
 Plug 'othree/yajs.vim'
 Plug 'pangloss/vim-javascript' 
@@ -41,20 +43,49 @@ Plug 'zah/nim.vim'
 " go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+" rust
+Plug 'rust-lang/rust'
+Plug 'racer-rust/vim-racer'
+
+
 call plug#end()
 
+" rust racer
+let g:racer_cmd = "~/.cargo/bin/racer"
+
+" CtrlP
+if executable('rg')
+  set grepprg=rg\ --color=never
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+endif
 
 " ALE
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'python': ['pylint'],
+\   'python': ['flake8', 'mypy'],
 \   'nim': ['nimcheck'],
+\   'go': ['golangci-lint'],
+\   'rust': ['rls', 'cargo'],
 \}
-let g:ale_python_pylint_options= '--rcfile ~/pylintrc'
 
 let g:ale_fixers = {
-\   'javascript': ['eslint']
+\   'javascript': ['eslint'],
+\   'python': ['black'],
+\   'go': ['golangci-lint'],
+\   'rust': ['rustfmt'],
 \}
+let g:ale_python_flake8_use_global = 1
+let g:ale_python_flake8_options = "--config=/Users/aljohnson/go/src/cd.splunkdev.com/ML/ssc-ml/python/common/setup.cfg"
+
+let g:ale_python_mypy_use_global = 1
+let g:ale_python_mypy_options = "--config-file=/Users/aljohnson/go/src/cd.splunkdev.com/ML/ssc-ml/python/common/setup.cfg"
+
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
+
+let g:ale_sign_error = '🔥'
+let g:ale_sign_warning = '⚠️ '
 
 " nerd tree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
