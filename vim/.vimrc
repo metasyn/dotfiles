@@ -12,6 +12,7 @@ Plug 'vim-airline/vim-airline-themes' " pretty
 
 " completion, syntax
 " Plug 'valloric/youcompleteme'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'w0rp/ale'
 Plug 'ctrlpvim/ctrlp.vim'
 
@@ -46,7 +47,6 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " rust
 Plug 'rust-lang/rust'
 Plug 'racer-rust/vim-racer'
-
 
 call plug#end()
 
@@ -119,7 +119,9 @@ set foldmethod=indent
 set foldlevel=99
 
 " because who don't love copy pasta, bay bee !
-set clipboard=unnamedplus,unnamed,autoselect
+if !has('nvim')
+  set clipboard=unnamedplus,unnamed,autoselect
+endif
 
 " go
 let g:go_version_warning = 0
