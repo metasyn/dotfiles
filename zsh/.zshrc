@@ -34,6 +34,7 @@ alias pycrm="find . | grep -e pyc$ | xargs rm && find . | grep pycache | xargs r
 
 # Nim
 export PATH=~/code/Nim/bin:$PATH
+export PATH=~/.nimble/bin:$PATH
 
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -59,3 +60,4 @@ fi
 
 # alacritty
 alias alacritty='open -n /Applications/Alacritty.app'
+export PATH="/usr/local/opt/openssl/bin:$PATH"
