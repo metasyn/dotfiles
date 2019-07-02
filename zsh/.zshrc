@@ -14,8 +14,7 @@ antibody bundle < ~/.zsh_plugins.txt
 source ~/.z.sh
 
 # pretty ls
-eval `gdircolors ~/.dircolors.ansi-dark`
-alias ls="gls --color=auto"
+eval `dircolors ~/.dircolors.ansi-dark`
 
 # GO 
 export GOPATH="$HOME/go"
