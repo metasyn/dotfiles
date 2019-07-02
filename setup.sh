@@ -12,6 +12,7 @@ delete_and_link vim .vim
 delete_and_link vim/.vimrc .vimrc
 
 # zsh setup
+curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
 delete_and_link zsh/.zshrc .zshrc
 delete_and_link zsh/.zsh_plugins.txt .zsh_plugins.txt
 
