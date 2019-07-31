@@ -15,8 +15,8 @@ antibody bundle < ~/.zsh_plugins.txt
 # jump around
 source ~/.z.sh
 
-eval $(dircolors ~/.dircolors.ansi-dark)
-alias ls="ls --color=auto"
+eval $(gdircolors ~/.dircolors.ansi-dark)
+alias ls="gls --color=auto"
 
 # GO 
 export GOPATH="$HOME/go"

@@ -44,9 +44,8 @@ Plug 'zah/nim.vim'
 " go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-" rust
-Plug 'rust-lang/rust'
-Plug 'racer-rust/vim-racer'
+" hack
+Plug 'hhvm/vim-hack'
 
 call plug#end()
 
