@@ -35,6 +35,7 @@ eval "$(pyenv init -)"
 alias pyserve="python -m http.server"
 alias pycrm="find . | grep -e pyc$ | xargs rm && find . | grep pycache | xargs rm -rf"
 
+
 # Nim
 export PATH=~/code/Nim/bin:$PATH
 export PATH=~/.nimble/bin:$PATH
@@ -48,6 +49,8 @@ if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
 
-# alacritty
-alias alacritty='open -n /Applications/Alacritty.app'
-export PATH="/usr/local/opt/openssl/bin:$PATH"
+# work
+SLACK_RC=.slackrc
+if [[ -f $SLACK_RC ]]; then
+    source $SLACK_RC
+fi
