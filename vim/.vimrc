@@ -4,6 +4,12 @@ filetype plugin on
 
 " if you don't have plug, you need to run
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.vim/plugged')
 
 " pretty status line
@@ -46,6 +52,9 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " hack
 Plug 'hhvm/vim-hack'
+
+" arudino
+Plug 'stevearc/vim-arduino'
 
 call plug#end()
 
