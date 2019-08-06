@@ -2,3 +2,4 @@
 .DS_Store
 vim/autoload
 vim/plugged
+vim/.netrwhist
