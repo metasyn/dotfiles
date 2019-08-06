@@ -66,6 +66,7 @@ let g:ale_linters = {
 \   'nim': ['nimcheck'],
 \   'go': ['golangci-lint'],
 \   'rust': ['rls', 'cargo'],
+\   'hack': ['hack', 'hhast'],
 \}
 
 let g:ale_fixers = {
@@ -75,13 +76,17 @@ let g:ale_fixers = {
 \   'rust': ['rustfmt'],
 \}
 let g:ale_python_flake8_use_global = 1
-let g:ale_python_flake8_options = "--config=/Users/aljohnson/go/src/cd.splunkdev.com/ML/ssc-ml/python/common/setup.cfg"
-
 let g:ale_python_mypy_use_global = 1
-let g:ale_python_mypy_options = "--config-file=/Users/aljohnson/go/src/cd.splunkdev.com/ML/ssc-ml/python/common/setup.cfg"
 
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
+
+let g:ale_completion_enabled = 1
+
+" Press `K` to view the type in the gutter
+nnoremap <silent> K :ALEHover<CR>
+" Type `gd` to go to definition
+nnoremap <silent> gd :ALEGoToDefinition<CR>
 
 let g:ale_sign_error = '🔥'
 let g:ale_sign_warning = '⚠️ '
@@ -90,7 +95,9 @@ let g:ale_sign_warning = '⚠️ '
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 
 " fzf
-set rtp+=/usr/local/opt/fzf
+if executable('fzf')
+  set rtp+=/usr/local/opt/fzf
+endif
 
 filetype plugin indent on
 set t_Co=256
