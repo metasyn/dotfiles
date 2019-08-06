@@ -49,8 +49,11 @@ if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # work
 SLACK_RC=.slackrc
 if [[ -f $SLACK_RC ]]; then
     source $SLACK_RC
 fi
+
