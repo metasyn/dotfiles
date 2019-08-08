@@ -76,6 +76,7 @@ let g:ale_linters = {
 \   'go': ['golangci-lint'],
 \   'rust': ['rls', 'cargo'],
 \   'hack': ['hack', 'hhast'],
+\   'java': ['checkstyle', 'google-java-format'],
 \}
 
 let g:ale_fixers = {
@@ -83,7 +84,9 @@ let g:ale_fixers = {
 \   'python': ['black'],
 \   'go': ['golangci-lint'],
 \   'rust': ['rustfmt'],
+\   'java': ['google_java_format'],
 \}
+
 let g:ale_python_flake8_use_global = 1
 let g:ale_python_mypy_use_global = 1
 
@@ -169,3 +172,6 @@ au BufRead,BufNewFile *.sbt set ft=scala
 
 set tabstop=2
 set shiftwidth=2
+
+" WORK
+source ~/.vimrc_slack
