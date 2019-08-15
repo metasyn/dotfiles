@@ -5,7 +5,12 @@ autoload -U +X compinit && compinit -u
 autoload -U +X bashcompinit && bashcompinit
 autoload -U promptinit && promptinit
 
+# Setup history
+HISTSIZE=5000
+SAVEHIST=10000
 HISTFILE=~/.zsh_history
+set -o incappendhistory
+
 ulimit -S -n 2048
 
 # Plugins
@@ -49,7 +54,19 @@ if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh 
+function look() {
+  fzf \
+    --preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file ||  (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500' \
+    --bind 'ctrl-o:execute(vim {}),ctrl-y:execute-silent(echo {} | pbcopy)+abort'
+}
+alias fzf=look
+
+# Nvim
+if [ $commands[nvim] ]; then
+  alias vim=nvim
+fi
 
 # work
 SLACK_RC=.slackrc
