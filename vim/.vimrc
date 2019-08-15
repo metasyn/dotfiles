@@ -16,11 +16,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline' " basic
 Plug 'vim-airline/vim-airline-themes' " pretty
 
-" completion, syntax
-" Plug 'valloric/youcompleteme'
+Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'w0rp/ale'
-Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'elzr/vim-json' " less quotes
 Plug 'cespare/vim-toml'
@@ -53,55 +50,65 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " hack
 Plug 'hhvm/vim-hack'
 
+" java/scala
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'derekwyatt/vim-scala'
+
+
 " arudino
 Plug 'stevearc/vim-arduino'
 
+Plug 'pantsbuild/vim-pants'
+
 call plug#end()
 
-" rust racer
-let g:racer_cmd = "~/.cargo/bin/racer"
+"java/scala
+let g:java_highlight_functions = 1
+let g:java_highlight_all = 1
+highlight link javaScopeDecl Statement
+highlight link javaType Type
+highlight link javaDocTags PreProcc
+au BufRead,BufNewFile *.sbt set filetype=scala
 
-" CtrlP
-if executable('rg')
-  set grepprg=rg\ --color=never
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  let g:ctrlp_use_caching = 0
-endif
-
-" ALE
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'python': ['flake8', 'mypy'],
+\   'python': ['flake8', 'mypy', 'pyls'],
 \   'nim': ['nimcheck'],
 \   'go': ['golangci-lint'],
 \   'rust': ['rls', 'cargo'],
 \   'hack': ['hack', 'hhast'],
-\   'java': ['checkstyle', 'google-java-format'],
+\   'java': ['checkstyle', 'javac', 'javalsp'],
 \}
 
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
-\   'python': ['black'],
+\   'python': ['yapf'],
 \   'go': ['golangci-lint'],
 \   'rust': ['rustfmt'],
 \   'java': ['google_java_format'],
 \}
 
-let g:ale_python_flake8_use_global = 1
-let g:ale_python_mypy_use_global = 1
-
+" Async Linting Engine
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 
-let g:ale_completion_enabled = 1
-
-" Press `K` to view the type in the gutter
-nnoremap <silent> K :ALEHover<CR>
-" Type `gd` to go to definition
-nnoremap <silent> gd :ALEGoToDefinition<CR>
-
 let g:ale_sign_error = '🔥'
 let g:ale_sign_warning = '⚠️ '
+let g:ale_sign_info = '🐟 '
+
+" Conqueror of Completion
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 " nerd tree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
@@ -175,3 +182,5 @@ set shiftwidth=2
 
 " WORK
 source ~/.vimrc_slack
+
+

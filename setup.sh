@@ -13,10 +13,16 @@ curl -fLo ./vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.co
 delete_and_link vim .vim
 delete_and_link vim/.vimrc .vimrc
 
+mkdir -p ~/.config/nvim
+delete_and_link neovim/init.vim .config/nvim/init.vim
+
 # zsh setup
 echo
 echo "Getting antibody & zsh stuff..."
-curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
+if ! [ -x "$(command -v antibody)" ]; then
+  curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
+fi
+
 delete_and_link zsh/.zshrc .zshrc
 delete_and_link zsh/.zsh_plugins.txt .zsh_plugins.txt
 
