@@ -59,7 +59,7 @@ fi
 function look() {
   fzf \
     --preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file ||  (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500' \
-    --bind 'ctrl-o:execute(vim {}),ctrl-y:execute-silent(echo {} | pbcopy)+abort'
+    --bind 'enter:execute(vim {}),ctrl-y:execute-silent(echo {} | pbcopy)+abort'
 }
 alias fzf=look
 
