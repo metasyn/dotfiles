@@ -54,11 +54,11 @@ Plug 'hhvm/vim-hack'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'derekwyatt/vim-scala'
 
-
 " arudino
 Plug 'stevearc/vim-arduino'
 
-Plug 'pantsbuild/vim-pants'
+" 🤮
+Plug 'solarnz/thrift.vim'
 
 call plug#end()
 
@@ -147,6 +147,10 @@ set foldlevel=99
 if !has('nvim')
   set clipboard=unnamedplus,unnamed,autoselect
 endif
+
+" nvim/normal vim compatible
+set clipboard+=unnamedplus
+
 
 " go
 let g:go_version_warning = 0
