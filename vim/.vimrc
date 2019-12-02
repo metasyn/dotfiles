@@ -184,7 +184,4 @@ au BufRead,BufNewFile *.sbt set ft=scala
 set tabstop=2
 set shiftwidth=2
 
-" WORK
-source ~/.vimrc_slack
-
 
