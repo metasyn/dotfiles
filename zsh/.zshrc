@@ -23,8 +23,14 @@ antibody bundle < ~/.zsh_plugins.txt
 # jump around
 source ~/.z.sh
 
-eval $(gdircolors ~/.dircolors.ansi-dark)
-alias ls="gls --color=auto"
+if [[ $(hostname) == *"NYC"* ]]; then
+  eval $(gdircolors ~/.dircolors.ansi-dark)
+  alias ls="gls --color=auto"
+else
+  eval $(dircolors ~/.dircolors.ansi-dark)
+  alias ls="ls --color=auto"
+fi;
+
 
 # Nvim
 if [ $commands[nvim] ]; then
@@ -72,5 +78,3 @@ SLACK_RC=~/.slackrc
 if [[ -f $SLACK_RC ]]; then
     source $SLACK_RC
 fi
-
-#zprof
