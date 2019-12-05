@@ -113,10 +113,10 @@ let g:ale_lint_on_text_changed='normal'
 let g:ale_lint_on_insert_leave=1
 let g:ale_fix_on_save = 1
 
-if [[ $(hostname) == *"NYC"* ]]; then
+if system("hostname") =~ "NYC"
   let g:ale_python_flake8_executable = "/Users/xjohnson/src/data-airflow/bin/flake8"
   let g:ale_python_yapf_executable = "/Users/xjohnson/src/data-airflow/bin/yapf"
-fi;
+endif
 
 let g:ale_sign_error = '🔥'
 let g:ale_sign_warning = '⚠️ '
