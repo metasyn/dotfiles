@@ -35,6 +35,7 @@ Plug 'sjl/gundo.vim' "Under used
 Plug 'tpope/vim-fugitive' "Gblame etc.
 
 Plug 'lingceng/z.vim'
+Plug 'dag/vim-fish'
 
 " javascript
 Plug 'othree/yajs.vim'
@@ -54,13 +55,24 @@ Plug 'hhvm/vim-hack'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'derekwyatt/vim-scala'
 
+Plug 'edma2/vim-pants'
+Plug 'tpope/vim-dispatch'
+
 " arudino
 Plug 'stevearc/vim-arduino'
 
-" 🤮
+" Python
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+
+" various
 Plug 'solarnz/thrift.vim'
 
 call plug#end()
+
+function! Slackfmt(buffer) abort
+    let l:executable ='/Users/xjohnson/src/webapp/bin/hackfmt'
+    return {'command': ale#Escape(l:executable) . ' %t -i %s', 'read_temporary_file': 1,}
+endfunction
 
 "java/scala
 let g:java_highlight_functions = 1
@@ -68,16 +80,19 @@ let g:java_highlight_all = 1
 highlight link javaScopeDecl Statement
 highlight link javaType Type
 highlight link javaDocTags PreProcc
+
+" scala
 au BufRead,BufNewFile *.sbt set filetype=scala
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'python': ['flake8', 'mypy', 'pyls'],
+\   'python': ['flake8'],
 \   'nim': ['nimcheck'],
 \   'go': ['golangci-lint'],
 \   'rust': ['rls', 'cargo'],
 \   'hack': ['hack', 'hhast'],
 \   'java': ['checkstyle', 'javac', 'javalsp'],
+\   'scala': ['scalac', 'scalastyle', 'sbtserver', 'fsc'],
 \}
 
 let g:ale_fixers = {
@@ -86,11 +101,22 @@ let g:ale_fixers = {
 \   'go': ['golangci-lint'],
 \   'rust': ['rustfmt'],
 \   'java': ['google_java_format'],
+\   'scala': ['scalafmt'],
+\   'hack': ['Slackfmt'],
 \}
 
 " Async Linting Engine
 highlight clear ALEErrorSign
 highlight clear ALEWarningSign
+
+let g:ale_lint_on_text_changed='normal'
+let g:ale_lint_on_insert_leave=1
+let g:ale_fix_on_save = 1
+
+if [[ $(hostname) == *"NYC"* ]]; then
+  let g:ale_python_flake8_executable = "/Users/xjohnson/src/data-airflow/bin/flake8"
+  let g:ale_python_yapf_executable = "/Users/xjohnson/src/data-airflow/bin/yapf"
+fi;
 
 let g:ale_sign_error = '🔥'
 let g:ale_sign_warning = '⚠️ '
@@ -131,15 +157,15 @@ map <c-h> <c-w>h
 
 " basics
 set autochdir
-set autoindent
 set backspace=2
-set expandtab
 set nu
 set ruler
-set shiftwidth=4
 set smartindent
 set softtabstop=4
-set tabstop=8
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set autoindent
 set foldmethod=indent
 set foldlevel=99
 
@@ -183,5 +209,3 @@ au BufRead,BufNewFile *.sbt set ft=scala
 
 set tabstop=2
 set shiftwidth=2
-
-
