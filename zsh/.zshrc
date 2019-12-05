@@ -1,9 +1,12 @@
 #!/bin/zsh
 set -o vi
 
+#zmodload zsh/zprof
+
 autoload -U +X compinit && compinit -u
 autoload -U +X bashcompinit && bashcompinit
 autoload -U promptinit && promptinit
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=2'
 
 # Setup history
 HISTSIZE=5000
@@ -22,6 +25,11 @@ source ~/.z.sh
 
 eval $(gdircolors ~/.dircolors.ansi-dark)
 alias ls="gls --color=auto"
+
+# Nvim
+if [ $commands[nvim] ]; then
+  alias vim=nvim
+fi
 
 # GO 
 export GOPATH="$HOME/go"
@@ -48,29 +56,21 @@ export PATH=~/.nimble/bin:$PATH
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
-# k8s
-alias k='kubectl'
-if [ $commands[kubectl] ]; then
-  source <(kubectl completion zsh)
-fi
+# Javascript
 
 # Fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh 
 function look() {
   fzf \
     --preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file ||  (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500' \
-    --bind 'enter:execute(vim {}),ctrl-y:execute-silent(echo {} | pbcopy)+abort'
+    --bind 'enter:execute(nvim {}),ctrl-y:execute-silent(echo {} | pbcopy)+abort'
 }
 alias fzf=look
 
-# Nvim
-if [ $commands[nvim] ]; then
-  alias vim=nvim
-fi
-
 # work
-SLACK_RC=.slackrc
+SLACK_RC=~/.slackrc
 if [[ -f $SLACK_RC ]]; then
     source $SLACK_RC
 fi
 
+#zprof
