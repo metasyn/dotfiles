@@ -16,6 +16,8 @@ set -o incappendhistory
 
 ulimit -S -n 2048
 
+export GIT_EDITOR=vi
+
 # Plugins
 source <(antibody init)
 antibody bundle < ~/.zsh_plugins.txt
