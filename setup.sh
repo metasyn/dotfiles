@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-DISTRO=
+DISTRO=""
+DEBIAN="debian"
+MACOS="macos"
 
 set -o nounset
 
@@ -58,39 +60,52 @@ function missing() {
   fi
 }
 
-function setup_os() {
+function detect_os() {
   name=$(uname -a)
   if [[ $name == *"Ubuntu"* ]] || [[ $name == *"Debian" ]]; then
-    DISTRO=debian
-    bash -c "sudo apt-get update"
+    DISTRO=$DEBIAN
   fi
   if [[ $name == *"Darwin"* ]]; then
-    DISTRO=macos
+    DISTRO=$MACOS
+  fi
+  if [[ -z $DISTRO ]]; then
+    echo "Can't detect distro..."
+    exit 1
+  fi
+  echo "Detected distro: $DISTRO"
+}
 
+
+function setup_os() {
+  if [[ $DISTRO == $MACOS ]]; then
     if $(missing "brew"); then
       info "Getting homebrew..."
       /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
+    bash -c $("brew update")
+  fi
 
+  if [[ $DISTRO == $DEBIAN ]]; then
+    bash -c "sudo apt-get update"
   fi
 }
 
 function pkgmgr() {
   name=$(uname -a)
-  if [[ $DISTRO == "debian" ]]; then
+  if [[ $DISTRO == $DEBIAN ]]; then
     bash -c "sudo apt-get $@"
   fi
 
-  if [[ $DISTRO == "macos" ]]; then
+  if [[ $DISTRO == $MACOS ]]; then
     bash -c "brew $@"
   fi
 }
 
 function install() {
-  name=$(uname -a)
-  if [[ $name == *"Darwin"* ]]; then
+  if [[ $DISTRO == $MACOS ]]; then
     pkgmgr "install $@"
-  else
+  fi
+  if [[ $DISTRO == $DEBIAN ]]; then
     pkgmgr "install -y $@"
   fi
 }
@@ -172,6 +187,18 @@ function setup_misc() {
 
   info "Getting dircolors for nicer ls output..."
   delete_and_link terminal/dircolors.ansi-dark .dircolors.ansi-dark
+
+}
+
+function setup_fonts() {
+  info "Getting fonts for powerline..."
+  git clone https://github.com/powerline/fonts.git --depth=1 2>&1
+  # install
+  cd fonts
+  ./install.sh
+  # clean-up a bit
+  cd ..
+  rm -rf fonts
 }
 
 declare -a setups=(
@@ -182,8 +209,11 @@ declare -a setups=(
   "setup_nim"
   "setup_node"
   "setup_tmux"
+  "setup_fonts"
   "setup_misc"
 )
+
+detect_os
 
 for setup in ${setups[@]}; do
   item "$(random_color)" $setup
