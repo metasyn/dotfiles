@@ -188,6 +188,13 @@ function setup_misc() {
   info "Getting dircolors for nicer ls output..."
   delete_and_link terminal/dircolors.ansi-dark .dircolors.ansi-dark
 
+  if $(missing "rg"); then
+    info "Installing ripgrep..."
+    install ripgrep 
+  else
+    info "Ripgrep installed..."
+  fi
+
 }
 
 function setup_fonts() {
