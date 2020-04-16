@@ -2,6 +2,9 @@ set nocompatible
 set encoding=utf-8
 filetype plugin on
 
+set undofile
+set undodir=$HOME/.vimundo
+
 " if you don't have plug, you need to run
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -39,7 +42,7 @@ Plug 'dag/vim-fish'
 
 " javascript
 Plug 'othree/yajs.vim'
-Plug 'pangloss/vim-javascript' 
+Plug 'pangloss/vim-javascript'
 Plug 'maksimr/vim-jsbeautify'
 
 " nim
@@ -62,7 +65,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'stevearc/vim-arduino'
 
 " Python
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 
 " various
 Plug 'solarnz/thrift.vim'
@@ -85,24 +88,26 @@ highlight link javaDocTags PreProcc
 au BufRead,BufNewFile *.sbt set filetype=scala
 
 let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'python': ['flake8'],
-\   'nim': ['nimcheck'],
-\   'go': ['golangci-lint'],
-\   'rust': ['rls', 'cargo'],
-\   'hack': ['hack', 'hhast'],
-\   'java': ['checkstyle', 'javac', 'javalsp'],
-\   'scala': ['scalac', 'scalastyle', 'sbtserver', 'fsc'],
+\   'javascript':   ['eslint'],
+\   'python':       ['flake8'],
+\   'nim':          ['nimlsp', 'nimcheck'],
+\   'go':           ['golangci-lint'],
+\   'rust':         ['rls', 'cargo'],
+\   'hack':         ['hack', 'hhast'],
+\   'java':         ['checkstyle', 'javac', 'javalsp'],
+\   'scala':        ['scalac', 'scalastyle', 'sbtserver', 'fsc'],
 \}
 
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\   'python': ['yapf'],
-\   'go': ['golangci-lint'],
-\   'rust': ['rustfmt'],
-\   'java': ['google_java_format'],
-\   'scala': ['scalafmt'],
-\   'hack': ['Slackfmt'],
+\   'nim':          ['nimpretty'],
+\   'javascript':   ['eslint'],
+\   'python':       ['yapf'],
+\   'go':           ['golangci-lint'],
+\   'rust':         ['rustfmt'],
+\   'java':         ['google_java_format'],
+\   'scala':        ['scalafmt'],
+\   'hack':         ['Slackfmt'],
+\   '*':            ['remove_trailing_lines', 'trim_whitespace'],
 \}
 
 " Async Linting Engine
@@ -112,11 +117,6 @@ highlight clear ALEWarningSign
 let g:ale_lint_on_text_changed='normal'
 let g:ale_lint_on_insert_leave=1
 let g:ale_fix_on_save = 1
-
-if system("hostname") =~ "NYC"
-  let g:ale_python_flake8_executable = "/Users/xjohnson/src/data-airflow/bin/flake8"
-  let g:ale_python_yapf_executable = "/Users/xjohnson/src/data-airflow/bin/yapf"
-endif
 
 let g:ale_sign_error = '🔥'
 let g:ale_sign_warning = '⚠️ '
