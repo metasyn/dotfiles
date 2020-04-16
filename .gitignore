@@ -1,4 +1,5 @@
 *.swp
+.trash
 .DS_Store
 vim/autoload
 vim/plugged
