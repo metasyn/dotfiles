@@ -24,7 +24,7 @@ function setup_docker {
     apt-get update
     info "Installing..."
     apt-get install docker-ce docker-ce-cli containerd.io -y
-    sudo systemctl enable docker
+    systemctl enable docker
   else
     info "Docker installed..."
   fi
@@ -33,8 +33,8 @@ function setup_docker {
 function setup_docker_compose {
   if $(missing "docker-compose"); then
     info "Getting docker-compose..."
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
+    curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
   else
     info "Docker Compose is installed..."
   fi
@@ -46,7 +46,7 @@ function setup_standardnotes {
   apt-get update && apt-get install libmysqlclient-dev -y
   if $(missing "rvm"); then
     apt-get update && apt-get install software-properties-common -y
-    apt-add-repository -y ppa:rael-gc/rvm && apt-get update && apt-get install rvm
+    apt-add-repository -y ppa:rael-gc/rvm && apt-get update && apt-get install rvm -y
   else
     info "RVM installed..."
   fi
@@ -67,12 +67,12 @@ function setup_standardnotes {
 
 
 function setup_ufw {
-  sudo ufw default deny incoming
-  sudo ufw default allow outgoing
-  sudo ufw allow 80
-  sudo ufw allow 443
-  sudo ufw allow 22
-  echo "Please run: sudo ufw enable"
+  ufw default deny incoming
+  ufw default allow outgoing
+  ufw allow 80
+  ufw allow 443
+  ufw allow 22
+  echo "Please run: ufw enable"
 }
 
 
