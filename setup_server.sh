@@ -24,6 +24,8 @@ function setup_docker {
     apt-get update
     info "Installing..."
     apt-get install docker-ce docker-ce-cli containerd.io -y
+  else
+    info "Docker installed..."
   fi
 }
 
@@ -40,6 +42,7 @@ function setup_ufw {
 
 declare -a setups=(
   "setup_docker"
+  "setup_ufw"
 )
 
 for setup in ${setups[@]}; do
