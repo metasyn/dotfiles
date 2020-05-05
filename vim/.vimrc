@@ -61,6 +61,10 @@ Plug 'derekwyatt/vim-scala'
 Plug 'edma2/vim-pants'
 Plug 'tpope/vim-dispatch'
 
+" rust
+Plug 'rust-lang/rust.vim'
+Plug 'neoclide/coc-rls'
+
 " arudino
 Plug 'stevearc/vim-arduino'
 
@@ -123,6 +127,8 @@ let g:ale_sign_warning = '⚠️ '
 let g:ale_sign_info = '🐟 '
 
 " Conqueror of Completion
+
+let g:coc_global_extensions = ['coc-rls', 'coc-python', 'coc-rust-analyzer']
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)

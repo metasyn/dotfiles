@@ -39,7 +39,7 @@ if [ $commands[nvim] ]; then
   alias vim=nvim
 fi
 
-# GO 
+# GO
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 export PATH="$GOPATH/bin:$PATH"
@@ -53,7 +53,7 @@ export PYTHONDONTWRITEBYTECODE="true"
 
 eval "$(pyenv init -)"
 
-alias pyserve="python -m http.server"
+alias pyserve="python3 -m http.server"
 alias pycrm="find . | grep -e pyc$ | xargs rm && find . | grep pycache | xargs rm -rf"
 
 
@@ -67,7 +67,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Javascript
 
 # Fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 function look() {
   fzf \
     --preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file ||  (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500' \
