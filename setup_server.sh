@@ -55,7 +55,8 @@ function setup_standardnotes {
 
   if $(missing "ruby"); then
     info "Installing ruby..."
-    apt-get update && apt-get install ruby-full -y
+    apt-get update && apt-get install ruby-full=1:2.5.1 -y
+    ln -s /usr/bin/ruby2.5 /usr/bin/ruby
   else
     info "Ruby installed..."
   fi
