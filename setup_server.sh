@@ -43,13 +43,30 @@ function setup_docker_compose {
 
 function setup_standardnotes {
   info "Setting up requirements for standardnotes..."
-  apt-get update && apt-get install libmysqlclient-dev -y
+
+  dpkg -l libmysqlclient-dev 2>&1 /dev/null
+  if [[ $? -ne 0 ]]; then
+    info "Installing libsqlclient-dev..."
+    apt-get update && apt-get install libmysqlclient-dev -y
+  else
+    info "libmysqlclient-dev exists..."
+  fi
+
   if $(missing "rvm"); then
     apt-get update && apt-get install software-properties-common -y
     apt-add-repository -y ppa:rael-gc/rvm && apt-get update && apt-get install rvm -y
+    echo 'source "/etc/profile.d/rvm.sh"' >> ~/.zshrc
   else
     info "RVM installed..."
   fi
+
+  if $(missing "ruby"); then
+    info "Installing ruby..."
+    rvm install ruby
+  else
+    info "Ruby installed..."
+  fi
+
   if [[ ! -d  /opt/syncing-server ]]; then
     popd /opt
     cd /opt
