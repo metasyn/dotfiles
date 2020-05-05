@@ -29,6 +29,15 @@ function setup_docker {
   fi
 }
 
+function setup_docker_compose {
+  if ($missing "docker-compose"); then
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+  else
+    info "Docker Compose is installed..."
+  fi
+}
+
 
 function setup_ufw {
   sudo ufw default deny incoming
@@ -36,7 +45,7 @@ function setup_ufw {
   sudo ufw allow 80
   sudo ufw allow 443
   sudo ufw allow 22
-  sudo ufw enable
+  echo "Please run: sudo ufw enable"
 }
 
 
