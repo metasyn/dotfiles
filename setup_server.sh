@@ -44,7 +44,7 @@ function setup_docker_compose {
 function setup_standardnotes {
   info "Setting up requirements for standardnotes..."
 
-  dpkg -l libmysqlclient-dev 2>&1 /dev/null
+  dpkg -l libmysqlclient-dev 2>&1 > /dev/null
   if [[ $? -ne 0 ]]; then
     info "Installing libsqlclient-dev..."
     apt-get update && apt-get install libmysqlclient-dev -y
