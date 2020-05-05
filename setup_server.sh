@@ -31,6 +31,7 @@ function setup_docker {
 
 function setup_docker_compose {
   if ($missing "docker-compose"); then
+    info "Getting docker-compose..."
     sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
   else
@@ -51,6 +52,7 @@ function setup_ufw {
 
 declare -a setups=(
   "setup_docker"
+  "setup_docker_compose"
   "setup_ufw"
 )
 
