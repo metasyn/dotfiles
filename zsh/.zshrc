@@ -38,6 +38,7 @@ fi;
 if [ $commands[nvim] ]; then
   alias vim=nvim
 fi
+EDITOR=vim
 
 # GO
 export GOPATH="$HOME/go"
