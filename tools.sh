@@ -139,7 +139,7 @@ function setup_vim() {
 function setup_zsh() {
   if [[ ! -x "$(command -v antibody)" ]]; then
     info "Getting antibody & zsh stuff..."
-    curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
+    curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
   else
     info "Antibody installed..."
   fi
@@ -182,6 +182,12 @@ function setup_tmux() {
   delete_and_link tmux/.tmux.conf .tmux.conf
 }
 
+function setup_rust() {
+  info "Getting rust..."
+  curl https://sh.rustup.rs -sSf | sh
+}
+
+
 # z.sh
 function setup_misc() {
   info "Getting z.sh..."
@@ -212,3 +218,5 @@ function setup_fonts() {
   cd ..
   rm -rf fonts
 }
+
+set +o nounset
