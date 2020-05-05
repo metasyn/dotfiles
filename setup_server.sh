@@ -24,6 +24,7 @@ function setup_docker {
     apt-get update
     info "Installing..."
     apt-get install docker-ce docker-ce-cli containerd.io -y
+    sudo systemctl enable docker
   else
     info "Docker installed..."
   fi
