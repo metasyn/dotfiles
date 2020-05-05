@@ -4,7 +4,7 @@ services:
     image: nginx:latest
     volumes:
       - ./nginx:/etc/nginx
-        #- /var/www/nginx:/var/www/nginx
+      - /var/www/nginx:/var/www/nginx
     ports:
       - 80:80
       - 443:443
@@ -16,12 +16,12 @@ services:
     cpus: 0.1
     mem_limit: 10m
 
-  ghost:
-    image: ghost:3
-    environment:
-      url: "http://metasyn.pw/blog"
-      NODE_ENV: "production"
-    volumes:
-      - ./ghost:/var/lib/ghost/content
-    expose:
-      - "2368"
+#  ghost:
+#    image: ghost:3
+#    environment:
+#      url: "http://metasyn.pw/blog"
+#      NODE_ENV: "production"
+#    volumes:
+#      - ./ghost:/var/lib/ghost/content
+#    expose:
+#      - "2368"
