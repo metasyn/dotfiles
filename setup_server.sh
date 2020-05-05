@@ -63,7 +63,6 @@ function setup_standardnotes {
   fi
 
   if [[ ! -d  /opt/syncing-server ]]; then
-    popd /opt
     cd /opt
     git clone https://github.com/standardnotes/syncing-server.git
     cd syncing-server
