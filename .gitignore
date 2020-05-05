@@ -4,3 +4,6 @@
 vim/autoload
 vim/plugged
 vim/.netrwhist
+server/ghost
+server/nginx/*
+!server/nginx/nginx.conf
