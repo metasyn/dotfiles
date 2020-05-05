@@ -57,6 +57,7 @@ function setup_standardnotes {
     info "Installing ruby..."
     apt-get update && apt-get install ruby-full=1:2.5.1 -y
     ln -s /usr/bin/ruby2.5 /usr/bin/ruby
+    ln -s /usr/bin/gem2.5 /usr/bin/gem
   else
     info "Ruby installed..."
   fi
