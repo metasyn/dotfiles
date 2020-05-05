@@ -2,6 +2,7 @@
 source tools.sh
 
 set -o nounset
+set -o errexit
 
 function setup_docker {
   if $(missing "docker"); then
@@ -52,17 +53,9 @@ function setup_standardnotes {
     info "libmysqlclient-dev exists..."
   fi
 
-  if $(missing "rvm"); then
-    apt-get update && apt-get install software-properties-common -y
-    apt-add-repository -y ppa:rael-gc/rvm && apt-get update && apt-get install rvm -y
-    echo 'source "/etc/profile.d/rvm.sh"' >> ~/.zshrc
-  else
-    info "RVM installed..."
-  fi
-
   if $(missing "ruby"); then
     info "Installing ruby..."
-    rvm install ruby
+    apt-get update && apt-get install ruby-full
   else
     info "Ruby installed..."
   fi
