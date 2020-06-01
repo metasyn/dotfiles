@@ -51,11 +51,32 @@ function setup_ufw {
   echo "Please run: ufw enable"
 }
 
+function setup_webdav {
+  info "Setting up webdav..."
+  apt-get install apache2-utils -y
+  passwd_file=server/webdav.passwd
+  if [[ -f $passwd_file ]]; then
+    info "$passwd_file exists..."
+  else
+    info "Enter webdav username:"
+    read -s username
+    htpasswd -Bc $passwd_file $username
+  fi
+}
+
+function setup_folders {
+  info "Making folders..."
+  mkdir -p /var/www/nginx
+  mkdir -p /var/lib/dav
+}
+
 
 declare -a setups=(
   "setup_docker"
   "setup_docker_compose"
   "setup_ufw"
+  "setup_webdav"
+  "setup_folders"
 )
 
 for setup in ${setups[@]}; do
