@@ -63,7 +63,6 @@ Plug 'tpope/vim-dispatch'
 
 " rust
 Plug 'rust-lang/rust.vim'
-Plug 'neoclide/coc-rls'
 
 " arudino
 Plug 'stevearc/vim-arduino'
