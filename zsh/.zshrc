@@ -22,8 +22,6 @@ export GIT_EDITOR=vi
 source <(antibody init)
 antibody bundle < ~/.zsh_plugins.txt
 
-# jump around
-source ~/.z.sh
 
 if [[ $(hostname) == *"NYC"* ]]; then
   eval $(gdircolors ~/.dircolors.ansi-dark)
