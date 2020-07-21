@@ -76,6 +76,11 @@ function look() {
 }
 alias fzf=look
 
+function newb() {
+  git checkout master && git pull origin master && git checkout -b $1
+}
+
+
 # work
 SLACK_RC=~/.slackrc
 if [[ -f $SLACK_RC ]]; then
