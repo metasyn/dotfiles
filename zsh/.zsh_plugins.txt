@@ -4,6 +4,9 @@ zsh-users/zsh-history-substring-search
 zsh-users/zsh-completions
 zsh-users/zsh-autosuggestions
 
+# Navigation
+agkozak/zsh-z
+
 # Theme
 mafredri/zsh-async
 sindresorhus/pure
