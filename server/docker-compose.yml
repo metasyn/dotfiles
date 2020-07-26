@@ -22,14 +22,3 @@ services:
     cpus: 0.1
     mem_limit: 10m
 
-    #webdav:
-    #image: bytemark/webdav
-    #expose:
-    #  - "80"
-    #environment:
-    #  SERVER_NAME: metasyn.pw
-    #  LOCATION: /webdav
-    #restart: always
-    #volumes:
-    #  - /var/lib/dav:/var/lib/dav
-    #  - ./webdav.passwd:/user.passwd
