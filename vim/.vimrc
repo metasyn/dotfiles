@@ -15,6 +15,9 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
+" theme
+Plug 'chriskempson/base16-vim'
+
 " pretty status line
 Plug 'vim-airline/vim-airline' " basic
 Plug 'vim-airline/vim-airline-themes' " pretty
@@ -152,7 +155,8 @@ endif
 filetype plugin indent on
 set t_Co=256
 syntax on
-colorscheme Tomorrow-Night-Eighties
+
+colorscheme base16-default-dark
 
 " laze
 map <c-j> <c-w>j
@@ -177,6 +181,12 @@ set foldlevel=99
 " because who don't love copy pasta, bay bee !
 if !has('nvim')
   set clipboard=unnamedplus,unnamed,autoselect
+endif
+
+" weird issue with airline themes
+" ttps://github.com/chriskempson/base16-vim/issues/110#issuecomment-257204974
+if has("termguicolors")
+    set termguicolors
 endif
 
 " nvim/normal vim compatible
@@ -204,6 +214,7 @@ ino <M-g> <esc>:call JumpToDef()<cr>i
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#syntastic#enabled = 1
+let g:airline_theme='base16'
 
 " html 2 space
 autocmd Filetype html setlocal ts=2 sts=2 sw=2 expandtab
