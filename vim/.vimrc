@@ -43,6 +43,9 @@ Plug 'tpope/vim-fugitive' "Gblame etc.
 Plug 'lingceng/z.vim'
 Plug 'dag/vim-fish'
 
+" Bash
+Plug 'koalaman/shellcheck'
+
 " javascript
 Plug 'othree/yajs.vim'
 Plug 'pangloss/vim-javascript'
@@ -102,6 +105,7 @@ let g:ale_linters = {
 \   'hack':         ['hack', 'hhast'],
 \   'java':         ['checkstyle', 'javac', 'javalsp'],
 \   'scala':        ['scalac', 'scalastyle', 'sbtserver', 'fsc'],
+\   'bash':         ['shellcheck'],
 \}
 
 let g:ale_fixers = {
