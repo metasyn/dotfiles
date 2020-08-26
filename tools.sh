@@ -175,7 +175,7 @@ function setup_python() {
 function setup_nim() {
   if $(missing "nim") ; then
     info "Getting nim..."
-    curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+    curl https://nim-lang.org/choosenim/init.sh -sSf | sh -s -- -y
   else
     info "Nim is installed."
   fi
