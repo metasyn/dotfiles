@@ -13,6 +13,8 @@ HISTSIZE=5000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 set -o incappendhistory
+set -o inc_append_history
+set -o share_history
 
 ulimit -S -n 2048
 
@@ -31,6 +33,7 @@ else
   alias ls="ls --color=auto"
 fi;
 
+alias k=kubectl
 
 # Nvim
 if [ $commands[nvim] ]; then
@@ -67,16 +70,24 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # Fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-function look() {
+function ff() {
   fzf \
     --preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file ||  (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -500' \
     --bind 'enter:execute(nvim {}),ctrl-y:execute-silent(echo {} | pbcopy)+abort'
 }
-alias fzf=look
 
 function newb() {
   git checkout master && git pull origin master && git checkout -b $1
 }
+
+
+# SSH convenience
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+  eval `ssh-agent`
+  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+ssh-add -l > /dev/null || ssh-add
 
 
 # work
