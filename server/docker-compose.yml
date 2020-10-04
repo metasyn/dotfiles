@@ -5,6 +5,7 @@ services:
     volumes:
       - ./nginx:/etc/nginx
       - /var/www/nginx:/var/www/nginx
+      - /var/log/nginx:/var/log/nginx
         # ssl
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/www/certbot:/var/www/certbot
@@ -21,4 +22,3 @@ services:
       - "80"
     cpus: 0.1
     mem_limit: 10m
-
