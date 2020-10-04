@@ -3,6 +3,7 @@
 DISTRO=""
 DEBIAN="debian"
 MACOS="macos"
+ARCH="ARCH"
 
 set -o nounset
 
@@ -62,11 +63,14 @@ function missing() {
 
 function detect_os() {
   name=$(uname -a)
-  if [[ $name == *"Ubuntu"* ]] || [[ $name == *"Debian" ]]; then
+  if [[ $name == *"Ubuntu"* ]] || [[ $name == *"Debian"* ]]; then
     DISTRO=$DEBIAN
   fi
   if [[ $name == *"Darwin"* ]]; then
     DISTRO=$MACOS
+  fi
+  if [[ $name == *"ARCH"* ]]; then
+    DISTRO=$ARCH
   fi
   if [[ -z $DISTRO ]]; then
     echo "Can't detect distro..."
@@ -89,6 +93,10 @@ function setup_os() {
   if [[ $DISTRO == $DEBIAN ]]; then
     bash -c "sudo apt-get update"
   fi
+
+  if [[ $DISTRO == $ARCH ]]; then
+    bash -c "pacman -Syyu"
+  fi
 }
 
 function pkgmgr() {
@@ -100,6 +108,10 @@ function pkgmgr() {
   if [[ $DISTRO == $MACOS ]]; then
     bash -c "brew $@"
   fi
+
+  if [[ $DISTRO == $ARCH ]]; then
+    bash -c "pacman $@"
+  fi
 }
 
 function install() {
@@ -108,6 +120,9 @@ function install() {
   fi
   if [[ $DISTRO == $DEBIAN ]]; then
     pkgmgr "install -y $@"
+  fi
+  if [[ $DISTRO == $ARCH ]]; then
+    pkgmgr "-S --noconfirm $@"
   fi
 }
 
@@ -130,6 +145,7 @@ function setup_vim() {
 
   delete_and_link vim/.vimrc .vimrc
 
+  install neovim
   mkdir -p ~/.config/nvim
   delete_and_link neovim/init.vim .config/nvim/init.vim
 }
@@ -160,7 +176,7 @@ function setup_python() {
 function setup_nim() {
   if $(missing "nim") ; then
     info "Getting nim..."
-    curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+    curl https://nim-lang.org/choosenim/init.sh -sSf | sh -s -- -y
   else
     info "Nim is installed."
   fi
@@ -187,11 +203,7 @@ function setup_rust() {
 }
 
 
-# z.sh
 function setup_misc() {
-  info "Getting z.sh..."
-  delete_and_link z.sh .z.sh
-
   info "Getting dircolors for nicer ls output..."
   delete_and_link terminal/dircolors.ansi-dark .dircolors.ansi-dark
 
