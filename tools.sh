@@ -145,6 +145,7 @@ function setup_vim() {
 
   delete_and_link vim/.vimrc .vimrc
 
+  install neovim
   mkdir -p ~/.config/nvim
   delete_and_link neovim/init.vim .config/nvim/init.vim
 }
