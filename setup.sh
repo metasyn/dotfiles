@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 source tools.sh
+
+if [[ -n $DEBUG ]]; then
+  trap '(read -p "[$BASH_SOURCE:$LINENO - ${FUNCNAME[0]}] $BASH_COMMAND?")' DEBUG
+fi
+
 set -o nounset
 
 declare -a setups=(

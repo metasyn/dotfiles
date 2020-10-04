@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-DISTRO=""
+CURRENT_OS=""
 DEBIAN="debian"
 MACOS="macos"
 ARCH="ARCH"
+FORCE=${FORCE:-""}
 
 set -o nounset
 
@@ -54,7 +55,9 @@ function random_color() {
 }
 
 function missing() {
-  if [[ ! -z "$(command -v $1)" ]]; then
+  if [[ -n $FORCE ]]; then
+    return 0
+  elif [[ ! -z "$(command -v $1)" ]]; then
     return 1
   else
     return 0
@@ -64,24 +67,36 @@ function missing() {
 function detect_os() {
   name=$(uname -a)
   if [[ $name == *"Ubuntu"* ]] || [[ $name == *"Debian"* ]]; then
-    DISTRO=$DEBIAN
+    CURRENT_OS=$DEBIAN
   fi
   if [[ $name == *"Darwin"* ]]; then
-    DISTRO=$MACOS
+    CURRENT_OS=$MACOS
   fi
   if [[ $name == *"ARCH"* ]]; then
-    DISTRO=$ARCH
+    CURRENT_OS=$ARCH
   fi
-  if [[ -z $DISTRO ]]; then
+  if [[ -z $CURRENT_OS ]]; then
     echo "Can't detect distro..."
     exit 1
   fi
-  echo "Detected distro: $DISTRO"
+  echo "Detected distro: $CURRENT_OS"
+}
+
+function os_equals() {
+  if [[ -z $CURRENT_OS ]]; then
+    detect_os &> /dev/null
+  fi
+
+  if [[ $CURRENT_OS == $1 ]]; then
+    exit 0
+  else
+    exit 1
+  fi
 }
 
 
 function setup_os() {
-  if [[ $DISTRO == $MACOS ]]; then
+  if $(os_equals $MACOS); then
     if $(missing "brew"); then
       info "Getting homebrew..."
       /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -90,38 +105,39 @@ function setup_os() {
 
   fi
 
-  if [[ $DISTRO == $DEBIAN ]]; then
+  if $(os_equals $DEBIAN); then
     bash -c "sudo apt-get update"
   fi
 
-  if [[ $DISTRO == $ARCH ]]; then
+  if $(os_equals $ARCH); then
     bash -c "pacman -Syyu"
   fi
 }
 
 function pkgmgr() {
   name=$(uname -a)
-  if [[ $DISTRO == $DEBIAN ]]; then
+
+  if $(os_equals $DEBIAN); then
     bash -c "sudo apt-get $@"
   fi
 
-  if [[ $DISTRO == $MACOS ]]; then
+  if $(os_equals $MACOS); then
     bash -c "brew $@"
   fi
 
-  if [[ $DISTRO == $ARCH ]]; then
+  if $(os_equals $ARCH); then
     bash -c "pacman $@"
   fi
 }
 
 function install() {
-  if [[ $DISTRO == $MACOS ]]; then
+  if $(os_equals $MACOS); then
     pkgmgr "install $@"
   fi
-  if [[ $DISTRO == $DEBIAN ]]; then
+  if $(os_equals $DEBIAN); then
     pkgmgr "install -y $@"
   fi
-  if [[ $DISTRO == $ARCH ]]; then
+  if $(os_equals $ARCH); then
     pkgmgr "-S --noconfirm $@"
   fi
 }
@@ -145,7 +161,17 @@ function setup_vim() {
 
   delete_and_link vim/.vimrc .vimrc
 
-  install neovim
+  if $(missing "nvim"); then
+
+
+    if $(os_equals $DEBIAN); then
+      add-apt-repository ppa:neovim-ppa/stable -y
+      apt-get update
+    fi;
+
+    install neovim
+  fi;
+
   mkdir -p ~/.config/nvim
   delete_and_link neovim/init.vim .config/nvim/init.vim
 }
@@ -183,11 +209,32 @@ function setup_nim() {
 }
 
 function setup_node() {
-  if $(missing "node"); then
-    install nodejs
-  fi
-  if $(missing "npm"); then
-    install npm
+  set -x
+  info "Getting node..."
+
+  if $(os_equals $DEBIAN); then
+    if $(missing "nodejs"); then
+      info "Installing nodejs..."
+      add-apt-repository -y -r ppa:chris-lea/node.js
+      rm -f /etc/apt/sources.list.d/chris-lea-node_js-*.list || true
+      rm -f /etc/apt/sources.list.d/chris-lea-node_js-*.list.save || true
+      curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+      dist="$(lsb_release -s -c)"
+      VERSION=node_12.x
+      echo "deb https://deb.nodesource.com/$VERSION $dist main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+      echo "deb-src https://deb.nodesource.com/$VERSION $dist main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+      apt-get update
+      install nodejs
+    else
+      info "Nodejs is installed."
+    fi
+  # Not debian
+  else
+    if $(missing "node"); then
+      install node
+    else
+      info "Node is installed."
+    fi
   fi
 }
 
@@ -209,7 +256,14 @@ function setup_misc() {
 
   if $(missing "rg"); then
     info "Installing ripgrep..."
-    install ripgrep
+    if $(os_equals $DEBIAN); then
+       rg=ripgrep_11.0.2_amd64.deb
+       curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/$rg
+       sudo dpkg -i ripgrep_11.0.2_amd64.deb
+       rm ripgrep*
+    else
+      install ripgrep
+    fi
   else
     info "Ripgrep installed..."
   fi
