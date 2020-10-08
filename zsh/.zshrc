@@ -81,6 +81,13 @@ function newb() {
 }
 
 
+# work
+SLACK_RC=~/.slackrc
+if [[ -f $SLACK_RC ]]; then
+    source $SLACK_RC
+fi
+
+
 # SSH convenience
 if [ ! -S ~/.ssh/ssh_auth_sock ]; then
   eval `ssh-agent`
@@ -88,10 +95,3 @@ if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 ssh-add -l > /dev/null || ssh-add
-
-
-# work
-SLACK_RC=~/.slackrc
-if [[ -f $SLACK_RC ]]; then
-    source $SLACK_RC
-fi
