@@ -21,14 +21,16 @@ services:
     expose:
       - "80"
 
+  ##############
+  # NEXTCLOUD #
+  ##############
+
   nextcloud-db:
     image: mariadb
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: always
     volumes:
       - nextcloud-db:/var/lib/mysql
-    env_file:
-      - nextcloud-db.env
 
   nextcloud:
     image: nextcloud:apache
@@ -39,11 +41,10 @@ services:
       - nextcloud:/var/www
     environment:
       - MYSQL_HOST=nextcloud-db
-    env_file:
-      - nextcloud-db.env
     depends_on:
       - nextcloud-db
 
+
 volumes:
-  nextcloud-db:
   nextcloud:
+  nextcloud-db:
