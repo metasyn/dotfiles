@@ -7,7 +7,7 @@ validate:
 		nginx:latest nginx -c /etc/nginx/nginx.conf -t
 
 restart: validate
-	docker-compose down --remove-orphans && docker-compose up -d
+	docker-compose restart nginx
 
 logs:
-	docker-compose logs
+	docker-compose logs -f
