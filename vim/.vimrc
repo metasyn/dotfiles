@@ -52,7 +52,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'maksimr/vim-jsbeautify'
 
 " nim
-Plug 'zah/nim.vim'
+Plug 'alaviss/nim.nvim'
 
 " go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -111,7 +111,7 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   'nim':          ['nimpretty'],
 \   'javascript':   ['eslint'],
-\   'python':       ['yapf'],
+\   'python':       ['black'],
 \   'go':           ['golangci-lint'],
 \   'rust':         ['rustfmt'],
 \   'java':         ['google_java_format'],
