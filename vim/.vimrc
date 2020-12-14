@@ -43,6 +43,9 @@ Plug 'tpope/vim-fugitive' "Gblame etc.
 Plug 'lingceng/z.vim'
 Plug 'dag/vim-fish'
 
+" C
+Plug 'vim-scripts/c.vim'
+
 " Bash
 Plug 'koalaman/shellcheck'
 
@@ -52,7 +55,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'maksimr/vim-jsbeautify'
 
 " nim
-Plug 'zah/nim.vim'
+Plug 'alaviss/nim.nvim'
 
 " go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -106,6 +109,7 @@ let g:ale_linters = {
 \   'java':         ['checkstyle', 'javac', 'javalsp'],
 \   'scala':        ['scalac', 'scalastyle', 'sbtserver', 'fsc'],
 \   'bash':         ['shellcheck'],
+\   'c':            ['gcc', 'astyle', 'flawfinder'],
 \}
 
 let g:ale_fixers = {
@@ -117,6 +121,7 @@ let g:ale_fixers = {
 \   'java':         ['google_java_format'],
 \   'scala':        ['scalafmt'],
 \   'hack':         ['Slackfmt'],
+\   'c':            ['astyle'],
 \   '*':            ['remove_trailing_lines', 'trim_whitespace'],
 \}
 
@@ -128,9 +133,14 @@ let g:ale_lint_on_text_changed='normal'
 let g:ale_lint_on_insert_leave=1
 let g:ale_fix_on_save = 1
 
-let g:ale_sign_error = '🔥'
-let g:ale_sign_warning = '⚠️ '
-let g:ale_sign_info = '🐟 '
+let hostname = substitute(system('hostname'), '\n', '', '')
+
+" cmder via conemu terminal can't handle emoji
+if hostname != "xander-desktop"
+  let g:ale_sign_error = '🔥'
+  let g:ale_sign_warning = '⚠️ '
+  let g:ale_sign_info = '🐟 '
+endif
 
 " Conqueror of Completion
 
