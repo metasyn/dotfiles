@@ -55,9 +55,8 @@ export PYTHONDONTWRITEBYTECODE="true"
 
 eval "$(pyenv init -)"
 
-alias pyserve="python3 -m http.server"
+alias pyserve="python3 -m http.server -b 0.0.0.0"
 alias pycrm="find . | grep -e pyc$ | xargs rm && find . | grep pycache | xargs rm -rf"
-
 
 # Nim
 export PATH=~/code/Nim/bin:$PATH
