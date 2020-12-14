@@ -1,4 +1,4 @@
-version: '2.3'
+version: '3'
 services:
   nginx:
     image: nginx:latest
@@ -12,13 +12,39 @@ services:
     ports:
       - 80:80
       - 443:443
-    mem_limit: 100m
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     restart: always
+    shm_size: '256mb'
 
   show-scraper:
     image: metasyn/show-scraper
     expose:
       - "80"
-    cpus: 0.1
-    mem_limit: 10m
+
+  ##############
+  # NEXTCLOUD #
+  ##############
+
+  nextcloud-db:
+    image: mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: always
+    volumes:
+      - nextcloud-db:/var/lib/mysql
+
+  nextcloud:
+    image: nextcloud:apache
+    restart: always
+    ports:
+      - 80
+    volumes:
+      - nextcloud:/var/www
+    environment:
+      - MYSQL_HOST=nextcloud-db
+    depends_on:
+      - nextcloud-db
+
+
+volumes:
+  nextcloud:
+  nextcloud-db:

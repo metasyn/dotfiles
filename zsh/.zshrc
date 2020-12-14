@@ -55,8 +55,9 @@ export PYTHONDONTWRITEBYTECODE="true"
 
 eval "$(pyenv init -)"
 
-alias pyserve="python3 -m http.server -b 0.0.0.0"
+alias pyserve="python3 -m http.server"
 alias pycrm="find . | grep -e pyc$ | xargs rm && find . | grep pycache | xargs rm -rf"
+
 
 # Nim
 export PATH=~/code/Nim/bin:$PATH
@@ -94,3 +95,7 @@ if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 ssh-add -l > /dev/null || ssh-add
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

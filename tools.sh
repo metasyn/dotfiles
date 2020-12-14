@@ -178,7 +178,7 @@ function setup_vim() {
 
 
 function setup_zsh() {
-  if [[ ! -x "$(command -v antibody)" ]]; then
+  if $(missing "antibody"); then
     info "Getting antibody & zsh stuff..."
     curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
   else
@@ -193,7 +193,7 @@ function setup_zsh() {
 function setup_python() {
   if $(missing "pyenv"); then
     info "Getting pyenv..."
-    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv || echo ".pyenv exists."
   else
     info "Pyenv is installed."
   fi
@@ -209,7 +209,6 @@ function setup_nim() {
 }
 
 function setup_node() {
-  set -x
   info "Getting node..."
 
   if $(os_equals $DEBIAN); then
