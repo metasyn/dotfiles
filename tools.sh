@@ -88,9 +88,9 @@ function os_equals() {
   fi
 
   if [[ $CURRENT_OS == "$1" ]]; then
-    exit 0
+    return 0
   else
-    exit 1
+    return 1
   fi
 }
 
