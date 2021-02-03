@@ -35,29 +35,29 @@ function random_color() {
   WHITE='1;37'
 
   declare -a colors=(
-    $RED
-    $GREEN
-    $ORANGE
-    $BLUE
-    $PURPLE
-    $CYAN
-    $LIGHTRED
-    $LIGHTGREEN
-    $YELLOW
-    $LIGHTBLUE
-    $LIGHTPURPLE
-    $LIGHTCYAN
-    $WHITE
+    "$RED"
+    "$GREEN"
+    "$ORANGE"
+    "$BLUE"
+    "$PURPLE"
+    "$CYAN"
+    "$LIGHTRED"
+    "$LIGHTGREEN"
+    "$YELLOW"
+    "$LIGHTBLUE"
+    "$LIGHTPURPLE"
+    "$LIGHTCYAN"
+    "$WHITE"
   )
   size=${#colors[@]}
   idx=$(($RANDOM % $size))
-  echo ${colors[$idx]}
+  echo "${colors[$idx]}"
 }
 
 function missing() {
   if [[ -n $FORCE ]]; then
     return 0
-  elif [[ ! -z "$(command -v $1)" ]]; then
+  elif [[ -n "$(command -v $1)" ]]; then
     return 1
   else
     return 0
@@ -87,7 +87,7 @@ function os_equals() {
     detect_os &> /dev/null
   fi
 
-  if [[ $CURRENT_OS == $1 ]]; then
+  if [[ $CURRENT_OS == "$1" ]]; then
     exit 0
   else
     exit 1
@@ -96,8 +96,8 @@ function os_equals() {
 
 
 function setup_os() {
-  if $(os_equals $MACOS); then
-    if $(missing "brew"); then
+  if os_equals $MACOS; then
+    if missing "brew"; then
       info "Getting homebrew..."
       /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
@@ -105,11 +105,11 @@ function setup_os() {
 
   fi
 
-  if $(os_equals $DEBIAN); then
+  if os_equals $DEBIAN; then
     bash -c "sudo apt-get update"
   fi
 
-  if $(os_equals $ARCH); then
+  if os_equals $ARCH; then
     bash -c "pacman -Syyu"
   fi
 }
@@ -117,37 +117,37 @@ function setup_os() {
 function pkgmgr() {
   name=$(uname -a)
 
-  if $(os_equals $DEBIAN); then
-    bash -c "sudo apt-get $@"
+  if os_equals $DEBIAN; then
+    bash -c "sudo apt-get $*"
   fi
 
-  if $(os_equals $MACOS); then
-    bash -c "brew $@"
+  if os_equals $MACOS; then
+    bash -c "brew $*"
   fi
 
-  if $(os_equals $ARCH); then
-    bash -c "pacman $@"
+  if os_equals $ARCH; then
+    bash -c "pacman $*"
   fi
 }
 
 function install() {
-  if $(os_equals $MACOS); then
-    pkgmgr "install $@"
+  if os_equals $MACOS; then
+    pkgmgr "install $*"
   fi
-  if $(os_equals $DEBIAN); then
-    pkgmgr "install -y $@"
+  if os_equals $DEBIAN; then
+    pkgmgr "install -y $*"
   fi
-  if $(os_equals $ARCH); then
-    pkgmgr "-S --noconfirm $@"
+  if os_equals $ARCH; then
+    pkgmgr "-S --noconfirm $*"
   fi
 }
 
 
 delete_and_link() {
     mkdir -p ./.trash
-    mv $HOME/$2 .trash/$2 2> /dev/null
+    mv "$HOME/$2" ".trash/$2" 2> /dev/null
     echo "🔗 Linking $PWD/$1 to $HOME/$2"
-    ln -s $PWD/$1 $HOME/$2
+    ln -s "$PWD/$1" "$HOME/$2"
   }
 
 function setup_vim() {
@@ -161,10 +161,10 @@ function setup_vim() {
 
   delete_and_link vim/.vimrc .vimrc
 
-  if $(missing "nvim"); then
+  if missing "nvim"; then
 
 
-    if $(os_equals $DEBIAN); then
+    if os_equals $DEBIAN; then
       add-apt-repository ppa:neovim-ppa/stable -y
       apt-get update
     fi;
@@ -178,7 +178,7 @@ function setup_vim() {
 
 
 function setup_zsh() {
-  if $(missing "antibody"); then
+  if missing "antibody"; then
     info "Getting antibody & zsh stuff..."
     curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
   else
@@ -191,49 +191,43 @@ function setup_zsh() {
 
 
 function setup_python() {
-  if $(missing "pyenv"); then
+  if missing "pyenv"; then
     info "Getting pyenv..."
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv || echo ".pyenv exists."
   else
-    info "Pyenv is installed."
+    info "Pyenv is installed..."
   fi
 }
 
 function setup_nim() {
-  if $(missing "nim") ; then
+  if missing "nim" ; then
     info "Getting nim..."
     curl https://nim-lang.org/choosenim/init.sh -sSf | sh -s -- -y
   else
-    info "Nim is installed."
+    info "Nim is installed..."
   fi
 }
 
 function setup_node() {
-  info "Getting node..."
-
-  if $(os_equals $DEBIAN); then
-    if $(missing "nodejs"); then
-      info "Installing nodejs..."
-      add-apt-repository -y -r ppa:chris-lea/node.js
-      rm -f /etc/apt/sources.list.d/chris-lea-node_js-*.list || true
-      rm -f /etc/apt/sources.list.d/chris-lea-node_js-*.list.save || true
-      curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
-      dist="$(lsb_release -s -c)"
-      VERSION=node_12.x
-      echo "deb https://deb.nodesource.com/$VERSION $dist main" | sudo tee /etc/apt/sources.list.d/nodesource.list
-      echo "deb-src https://deb.nodesource.com/$VERSION $dist main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
-      apt-get update
-      install nodejs
+  if missing "nodejs"; then
+    info "Getting node..."
+    if os_equals $DEBIAN; then
+        info "Installing nodejs..."
+        add-apt-repository -y -r ppa:chris-lea/node.js
+        rm -f /etc/apt/sources.list.d/chris-lea-node_js-*.list || true
+        rm -f /etc/apt/sources.list.d/chris-lea-node_js-*.list.save || true
+        curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+        dist="$(lsb_release -s -c)"
+        VERSION=node_12.x
+        echo "deb https://deb.nodesource.com/$VERSION $dist main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+        echo "deb-src https://deb.nodesource.com/$VERSION $dist main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+        apt-get update
+        install nodejs
     else
-      info "Nodejs is installed."
-    fi
-  # Not debian
-  else
-    if $(missing "node"); then
       install node
-    else
-      info "Node is installed."
     fi
+  else
+    info "Node is installed..."
   fi
 }
 
@@ -244,8 +238,30 @@ function setup_tmux() {
 }
 
 function setup_rust() {
-  info "Getting rust..."
-  curl https://sh.rustup.rs -sSf | sh
+  if missing "cargo"; then
+    info "Getting rust..."
+    curl https://sh.rustup.rs -sSf | sh
+  else
+    info "Rust installed..."
+  fi
+}
+
+function setup_golang() {
+  if missing "go"; then
+    if os_equals $DEBIAN; then
+      FILE=go1.15.7.linux-amd64.tar.gz
+      curl -LO https://golang.org/dl/$FILE
+      tar -C /usr/local -xzf $FILE
+      info "Make sure /usr/local/go/bin is on PATH."
+      rm $FILE
+    elif os_equals $MACOS; then
+      install "golang"
+    else
+      info "FIX ME: not installing golang for this distro."
+    fi
+  else
+    info "Go is installed..."
+  fi
 }
 
 
@@ -253,12 +269,12 @@ function setup_misc() {
   info "Getting dircolors for nicer ls output..."
   delete_and_link terminal/dircolors.ansi-dark .dircolors.ansi-dark
 
-  if $(missing "rg"); then
+  if missing "rg"; then
     info "Installing ripgrep..."
-    if $(os_equals $DEBIAN); then
-       rg=ripgrep_11.0.2_amd64.deb
-       curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/$rg
-       sudo dpkg -i ripgrep_11.0.2_amd64.deb
+    if os_equals $DEBIAN; then
+       rg=ripgrep_12.1.1_amd64.deb
+       curl -LO https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/$rg
+       sudo dpkg -i ripgrep_12.1.1_amd64.deb
        rm ripgrep*
     else
       install ripgrep
@@ -269,14 +285,13 @@ function setup_misc() {
 
   info "Git stuff..."
   git config --global push.default current
-
 }
 
 function setup_fonts() {
   info "Getting fonts for powerline..."
   git clone https://github.com/powerline/fonts.git --depth=1 2>&1
   # install
-  cd fonts
+  cd fonts || exit 1
   ./install.sh
   # clean-up a bit
   cd ..

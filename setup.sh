@@ -14,6 +14,7 @@ declare -a setups=(
   "setup_python"
   "setup_nim"
   "setup_node"
+  "setup_golang"
   "setup_tmux"
   "setup_fonts"
   "setup_misc"
