@@ -44,6 +44,10 @@ services:
     depends_on:
       - nextcloud-db
 
+networks:
+  default:
+    external:
+      name: metasyn-services
 
 volumes:
   nextcloud:
